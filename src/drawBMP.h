@@ -6,6 +6,9 @@
 class drawBMP {
  public:
   drawBMP();
+  ~drawBMP();
+
+  
   void openBMP(const std::string &fileName);
   void displayBMP();
   void closeBMP();
