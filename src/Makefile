@@ -1,5 +1,6 @@
 .PHONY : all, build, clean, dist, test, gcov_report, valgrind_test
 
+TARGET = drawBMP
 CC = g++
 CFLAGS = -g -Wall -Wextra -Werror -std=c++17
 LIBRARIES = 
@@ -7,7 +8,7 @@ GCOV_FLAGS := -fprofile-arcs -ftest-coverage
 VALGRIND_FLAGS := --leak-check=full --show-leak-kinds=all --track-origins=yes --log-file=valgrind.log
 SOURCES := *.cc
 TEST_SOURCES := tests/*.cc 
-GUI := gui/*.cc
+# GUI := gui/*.cc
 
 DIST_DIR :=archive
 
@@ -27,7 +28,7 @@ endif
 all: clean build
 
 build:
-	$(CC) ${SOURCES} ${GUI} ${CFLAGS} $(LIBRARIES) -o drawBMP
+	$(CC) ${SOURCES} ${CFLAGS} $(LIBRARIES) -o $(TARGET)
 
 clean: clean_static_lib clean_log clean_exec clean_obj clean_gcov clean_lcov clean_lcov_report
 
