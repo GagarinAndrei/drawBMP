@@ -8,32 +8,28 @@
 
 namespace draw_bmp {
 
-// #pragma pack(push, 4)
+using BYTE = uint8_t;
+using WORD = uint16_t;
+using DWORD = uint32_t;
+using LONG = int32_t;
 
 typedef struct {
-  uint16_t bfType;
-  uint32_t bfSize;
-  uint16_t bfReserved1;
-  uint16_t bfReserved2;
-  uint32_t bfOffBits;
-} BitMapFileHeader;
-
-typedef struct {
-  uint32_t biSize;
-  int32_t biWidth;
-  int32_t biHeight;
-  uint16_t biPlanes;
-  uint16_t biBitCount;
-  uint32_t biCompression;
-  uint32_t biSizeImage;
-  int32_t biXPelsPerMeter;
-  int32_t biYPelsPerMeter;
-  uint32_t biClrUsed;
-  uint32_t biClrImportant;
-
-} BitMapInfo;
-
-// #pragma pack(pop)
+  WORD bfType;
+  DWORD bfSize;
+  DWORD bfReserved;
+  DWORD bfOffBits;
+  DWORD biSize;
+  LONG biWidth;
+  LONG biHeight;
+  WORD biPlanes;
+  WORD biBitCount;
+  DWORD biCompression;
+  DWORD biSizeImage;
+  LONG biXPelsPerMeter;
+  LONG biYPelsPerMeter;
+  DWORD biClrUsed;
+  DWORD biClrImportant;
+} BMPheader;
 
 class BMPReader {
  public:
@@ -45,19 +41,15 @@ class BMPReader {
   void closeBMP();
 
  private:
-  BitMapFileHeader header_;
-  BitMapInfo info_;
+  BMPheader header_;
   std::vector<uint16_t> pixelData_;
   std::fstream file_;
   uint16_t height_;
   uint16_t width_;
 
-  bool readBMPFile();
-  void readHeaders();
-  void readPixelData();
+  int* loadBMP(const std::string &fileName, int &mx, int &my);
 
-  void printBitMapInfo(const BitMapInfo &info);
-  void printBitMapFileHeader(const BitMapFileHeader &header);
+  void printBitMapInfo(const BMPheader &header_);
 };
 };  // namespace draw_bmp
 
